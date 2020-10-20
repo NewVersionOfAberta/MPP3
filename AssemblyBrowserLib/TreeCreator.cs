@@ -30,16 +30,16 @@ namespace AssemblyBrowserLib
             //Node tmpNode;
             foreach (var field in type.GetFields())
             {
-                parent.SubNodes.Add(new Node(Types.Field, field.Name, field.FieldType.ToString()));
+                parent.SubNodes.Add(new Node(Types.Field, field.FieldType.Name + " " + field.Name));
             }
             foreach (var property in type.GetProperties())
             {
-                parent.SubNodes.Add(new Node(Types.Property, property.Name, property.PropertyType.ToString()));
+                parent.SubNodes.Add(new Node(Types.Property, property.PropertyType.Name + " " + property.Name));
             }
             SignatureBilder signatureBilder = new SignatureBilder();
             foreach (var method in type.GetMethods())
             {
-                parent.SubNodes.Add(new Node(Types.Method, method.Name, signatureBilder.BildSignature(method)));
+                parent.SubNodes.Add(new Node(Types.Method, signatureBilder.BildSignature(method)));
             }
         }
 
@@ -50,9 +50,9 @@ namespace AssemblyBrowserLib
 
         private void CreateNewNode(Node parentNode, Type type, Dictionary<string, Node> parentNodes)
         {
-            var tmpNode = new Node(GetElemType(type), type.Name, null);
+            var tmpNode = new Node(GetElemType(type), type.Name);
 
-            tmpNode.SubNodes = new List<Node>();
+            tmpNode.SubNodes = new System.Collections.ObjectModel.ObservableCollection<Node>();
             parentNode.SubNodes.Add(tmpNode);
             parentNodes.Add(tmpNode.Name, tmpNode);
             AddMembers(tmpNode, type);
@@ -76,8 +76,8 @@ namespace AssemblyBrowserLib
                 {
                     if (!parentNodes.TryGetValue(currentNamespace, out parentNode))
                     {
-                        parentNode = new Node(Types.Namespace, currentNamespace, null);
-                        parentNode.SubNodes = new List<Node>();
+                        parentNode = new Node(Types.Namespace, currentNamespace);
+                        parentNode.SubNodes = new System.Collections.ObjectModel.ObservableCollection<Node>();
 
                         result.Add(parentNode);
                     }
