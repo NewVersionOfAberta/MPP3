@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyBrowserLib", "AssemblyBrowserLib.csproj", "{66E41086-A338-4E07-B3EE-EED350D663E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyBrowserMVVM", "..\AssemblyBrowserMVVM\AssemblyBrowserMVVM.csproj", "{8E7012F4-E15D-485D-B580-88A0CD06511A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66E41086-A338-4E07-B3EE-EED350D663E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66E41086-A338-4E07-B3EE-EED350D663E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66E41086-A338-4E07-B3EE-EED350D663E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66E41086-A338-4E07-B3EE-EED350D663E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E7012F4-E15D-485D-B580-88A0CD06511A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E7012F4-E15D-485D-B580-88A0CD06511A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E7012F4-E15D-485D-B580-88A0CD06511A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E7012F4-E15D-485D-B580-88A0CD06511A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50F6515B-5C0C-4A79-8B1E-E2AA963DE447}
+	EndGlobalSection
+EndGlobal
