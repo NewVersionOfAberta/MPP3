@@ -7,33 +7,38 @@ namespace AssemblyBrowserLib
 {
     class SignatureBilder
     {
-        private string GetAccessLevel(MethodInfo methodInfo)
+        private string GetAccessLevel(MethodBase methodInfo)
         {
             if (methodInfo.IsPublic)
             {
                 return "public ";
-            }else if (methodInfo.IsPrivate)
+            }
+            else if (methodInfo.IsPrivate)
             {
                 return "private ";
-            }else if (methodInfo.IsFamily || methodInfo.IsFamilyAndAssembly || methodInfo.IsFamilyOrAssembly)
+            }
+            else if (methodInfo.IsFamily || methodInfo.IsFamilyAndAssembly || methodInfo.IsFamilyOrAssembly)
             {
                 return "protected ";
             }
             return "";
         }
 
-        private string GetGenericSignaturePart(MethodInfo methodInfo)
+        private string GetGenericSignaturePart(MethodBase methodInfo)
         {
             if (methodInfo.ContainsGenericParameters)
             {
                 StringBuilder result = new StringBuilder("<");
                 var genericParams = methodInfo.GetGenericArguments();
-                result.Append(genericParams[0].Name);
-                for (int i = 1;  i < genericParams.Length; i++)
+                if (genericParams.Length > 0)
                 {
-                    result.Append(", " + genericParams[i].Name);
+                    result.Append(genericParams[0].Name);
+                    for (int i = 1; i < genericParams.Length; i++)
+                    {
+                        result.Append(", " + genericParams[i].Name);
+                    }
+                    result.Append(">");
                 }
-                result.Append(">");
                 return result.ToString();
             }
             else
@@ -42,25 +47,38 @@ namespace AssemblyBrowserLib
             }
         }
 
-        private void GetParamSignature(MethodInfo methodInfo, StringBuilder stringBuilder)
+        private void GetParamSignature(MethodBase methodInfo, StringBuilder stringBuilder)
         {
-            foreach (var param in methodInfo.GetParameters())
+            var parameters = methodInfo.GetParameters();
+            if (parameters.Length > 0)
             {
-                if (param.IsOut)
+                stringBuilder.Append(parameters[0].ParameterType.Name + " " + parameters[0].Name);
+                for (var i = 1; i < parameters.Length; i++)
                 {
-                    stringBuilder.Append("out ");
+                    if (parameters[i].IsOut)
+                    {
+                        stringBuilder.Append("out ");
+                    }
+                    stringBuilder.Append(", " + parameters[i].ParameterType.Name + " " + parameters[i].Name);
                 }
-                stringBuilder.Append(param.ParameterType.Name + " " + param.Name + " ");
             }
             
-        }
 
-        public string BildSignature(MethodInfo methodInfo)
+        }
+        
+
+        public string BildSignature(MethodBase methodInfo)
         {
-            
+            string returnType = "";
+            string name = methodInfo.DeclaringType.Name;
+            if (methodInfo is MethodInfo)
+            {
+                returnType = ((MethodInfo)methodInfo).ReturnType.Name + " ";
+                name = methodInfo.Name;
+            }
             StringBuilder stringBuilder = new StringBuilder(GetAccessLevel(methodInfo)
-                                                            + methodInfo.ReturnType.Name 
-                                                            + " " + methodInfo.Name +
+                                                            + returnType
+                                                            + name +
                                                             GetGenericSignaturePart(methodInfo)
                                                             + "(");
             GetParamSignature(methodInfo, stringBuilder);

@@ -4,18 +4,90 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AssemblyBrowserMVVM"
+        
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="10,0,-10.4,0">
-        <TreeView x:Name="tvMembersTree" HorizontalAlignment="Left" Height="400" Margin="0,10,0,0" VerticalAlignment="Top" Width="402">
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Path=SubNodes}">
-                    <StackPanel>
-                        <TextBlock Text="{Binding Type}" />
-                        <TextBlock Text="{Binding Name}" />
+        Title="Assembly Browser" Height="450" Width="800"
+        Background="Black"
+        >
+    <Window.DataContext>
+        <local:ViewModelBase/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style TargetType="TreeView">
+            <Style.Setters>
+                    <Setter Property="Background" Value="Black" />
+                    
+              </Style.Setters>
+        </Style>
+        <Style TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <RadialGradientBrush 
+                            GradientOrigin="0.5,0.5" Center="0.5,0.5" 
+                             RadiusX="0.5" RadiusY="0.5">
+                            <GradientStop Color="#ffd04f" Offset="0.5" />
+                            <GradientStop Color="#fcba03" Offset="1" />
+                        </RadialGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Button.Foreground" Value="Black" />
+                <Setter Property="Button.FontFamily" Value="JetBrains Mono" />
+                <Setter Property="Button.Margin" Value="5" />
+            </Style.Setters>
+        </Style>
+        <Style x:Key="Static" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="FontFamily" Value="JetBrains Mono" />
+        </Style>
+        <Style x:Key="Trigger" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="FontFamily" Value="JetBrains Mono" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Type}" Value="Namespace">
+                    <Setter Property="Foreground" Value="Red"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="Class">
+                    <Setter Property="Foreground" Value="BlueViolet"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="Field">
+                    <Setter Property="Foreground" Value="Orange"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="Property">
+                    <Setter Property="Foreground" Value="#18a318"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="Method">
+                    <Setter Property="Foreground" Value="Yellow"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="Enum">
+                    <Setter Property="Foreground" Value="PaleVioletRed"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="Constructor">
+                    <Setter Property="Foreground" Value="PaleTurquoise"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="Extension">
+                    <Setter Property="Foreground" Value="#48fabc"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="Interface">
+                    <Setter Property="Foreground" Value="#697aff"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel LastChildFill="True">
+        <Button x:Name="btFile" DockPanel.Dock="Top" Height="20" Width="100" Content="Load assembly" Command="{Binding Load}"/>
+
+        <TreeView x:Name="tvMembersTree" ItemsSource="{Binding SubNodes}">
+            <TreeView.ItemTemplate >
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=SubNodes, UpdateSourceTrigger=PropertyChanged}">
+                    <StackPanel Orientation="Horizontal" Margin="5, 5, 0, 0">
+                        <TextBlock x:Name="Type" Style="{StaticResource Trigger}" Text="{Binding Path=Type}" />
+                        <TextBlock Style="{StaticResource Static}" Text="{Binding Name}" Margin="5,0,0,0"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-    </Grid>
+    </DockPanel>
 </Window>

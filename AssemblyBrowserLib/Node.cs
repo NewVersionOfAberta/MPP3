@@ -26,6 +26,6 @@ namespace AssemblyBrowserLib
         public ObservableCollection<Node> SubNodes { get => subNodes; set => subNodes = value; }
         public string Name { get => name; set => name = value; }
         
-        internal Types Type { get => type; set => type = value; }
+        public Types Type { get => type; set => type = value; }
     }
 }

@@ -13,6 +13,8 @@ namespace AssemblyBrowserLib
         Field,
         Method, 
         Enum, 
+        Extension,
+        Constructor,
         Default
     }
 }

@@ -24,9 +24,7 @@ namespace AssemblyBrowserMVVM
         public MainWindow()
         {
             InitializeComponent();
-            DllParser parser = new DllParser();
-            parser.Parse("E:/University_needs/СПП/lab1/TracerLib/bin/Debug/netstandard2.0/TracerLib.dll");
-            tvMembersTree.ItemsSource = parser.SubNodes;
+            
         }
 
      
